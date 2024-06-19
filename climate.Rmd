@@ -237,30 +237,65 @@ The summary statistics of the cleaned data provide an overview of the distributi
 
 \section*{Visualizations}
 
+Monthly Average Temperature by Station
 
 \justifying
-The following plots show the monthly average temperature, monthly average precipitation and the boxplots represent distribution of monthly average temperatures, precipitation to identify seasonal trends, detecting any significant changes across different months. In addition, heat maps illustrate monthly average temperature, precipitation to identify patterns and anomalies. 
+The line plot of monthly average temperature shows the variation in average temperatures across different stations over the year. This plot helps identify seasonal trends and compare the temperature profiles of various stations. 
 
-```{r data_visualization, echo=FALSE, warning=FALSE, fig.width=10, fig.height=8}
+```{r monthly_avg_temp, echo=FALSE, warning=FALSE, fig.width=10, fig.height=5}
 #Monthly Average Temperature by Station
 ggplot(monthly_averages, aes(x = as.factor(Month), y = Avg_Temperature, color = Station_ID, group = Station_ID)) +
   geom_line() +
   labs(title = "Monthly Average Temperature by Station", x = "Month", y = "Average Temperature (°F)")
+```
 
+
+Monthly Average Precipitation by Station
+
+\justifying
+The line plot of monthly average precipitation illustrates the variation in precipitation levels across different stations over the year. This plot helps identify periods of high and low precipitation and compare precipitation trends among stations.
+
+```{r monthly_avg_precip, echo=FALSE, warning=FALSE, fig.width=10, fig.height=5}
 #Monthly Average Precipitation by Station
 ggplot(monthly_averages, aes(x = as.factor(Month), y = Avg_Precipitation, color = Station_ID, group = Station_ID)) +
   geom_line() +
   labs(title = "Monthly Average Precipitation by Station", x = "Month", y = "Average Precipitation (inches)")
+```
 
+
+Boxplot of Monthly Average Temperature
+
+\justifying
+The boxplot of monthly average temperatures reveals several outliers, represented as individual points beyond the whiskers. These outliers indicate months where specific weather stations recorded significantly lower temperatures compared to the overall distribution. For instance, in January and March, some stations reported average temperatures around 20°F, while in May, June, August, October, November, and December, outliers around 60°F were observed. These anomalies may be due to extreme weather events, data collection errors, or unique microclimatic conditions at specific stations. Further investigation into these outliers can help validate the data and understand the underlying climatic factors.
+
+```{r monthly_avg_temp_boxplot, echo=FALSE, warning=FALSE, fig.width=10, fig.height=4}
 #Boxplot of Monthly Average Temperature
 ggplot(monthly_averages, aes(x = as.factor(Month), y = Avg_Temperature)) +
   geom_boxplot() +
   labs(title = "Boxplot of Monthly Average Temperature", x = "Month", y = "Average Temperature (°F)")
+```
 
+Boxplot of Monthly Average Precipitation
+
+\justifying
+The boxplot of monthly average precipitation shows the distribution of precipitation levels for each month. Outliers highlight months with unusually high or low precipitation, which could be due to extreme weather events or other factors.
+
+```{r monthly_avg_precip_boxplot, echo=FALSE, warning=FALSE, fig.width=10, fig.height=4}
 #Boxplot of Monthly Average Precipitation
 ggplot(monthly_averages, aes(x = as.factor(Month), y = Avg_Precipitation)) +
   geom_boxplot() +
   labs(title = "Boxplot of Monthly Average Precipitation", x = "Month", y = "Average Precipitation (inches)")
+```
+
+
+
+
+Heatmap of Monthly Average Temperature
+
+\justifying
+The heatmap of monthly average temperature visualizes the temperature patterns across different stations and months. The color gradient highlights the variations, with warmer colors indicating higher temperatures and cooler colors indicating lower temperatures.
+
+```{r monthly_avg_temp_heatmap, echo=FALSE, warning=FALSE, fig.width=10, fig.height=6}
 
 #Heatmap of Monthly Average Temperature
 monthly_averages %>%
@@ -270,7 +305,15 @@ monthly_averages %>%
   scale_fill_gradient(low = "blue", high = "red") +
   #theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
   theme(axis.text.y = element_text(size=6), axis.ticks.y = element_line(size=0.5))
+```
 
+
+Heatmap of Monthly Average Precipitation
+
+\justifying
+The heatmap of monthly average precipitation displays the precipitation patterns across different stations and months. The color gradient highlights the variations, with darker colors indicating higher precipitation levels.
+
+```{r monthly_avg_precip_heatmap, echo=FALSE, warning=FALSE, fig.width=10, fig.height=6}
 #Heatmap of Monthly Average Precipitation
 monthly_averages %>%
   ggplot(aes(x = Month, y = Station_ID, fill = Avg_Precipitation)) +
